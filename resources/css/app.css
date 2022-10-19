@@ -1,0 +1,30 @@
+.border-bottom-black {
+    border-bottom: 1px solid black;
+}
+
+.border-top-black {
+    border-top: 1px solid black;
+}
+
+.background-white {
+    background: white;
+}
+
+.blog-card:hover {
+    cursor: pointer;
+    background: rgb(220, 220, 220);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
+
+.small-card {
+    background:white;
+    border:none;
+    color:black;
+}
+
+.small-card:hover {
+    color: white;
+    background: black;
+    cursor: pointer;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
+}
