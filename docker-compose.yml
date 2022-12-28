@@ -1,50 +1,51 @@
-version: "3.8"
+version: "3.9"
 services:
-
-    # PHP Service
-    php:
-        container_name: php
+    api:
+        container_name: api
         build:
             context: .
             target: php
-            args:
-                - APP_ENV=${APP_ENV}
         environment:
+            - PORT=8080
             - APP_ENV=${APP_ENV}
-            - CONTAINER_ROLE=app
+            - PHP_OPCACHE_ENABLE=1
+            - PHP_OPCACHE_ENABLE_CLI=0
+            - PHP_OPCACHE_REVALIDATE_FREQ=1
+            - PHP_OPCACHE_VALIDATE_TIMESTAMPS=1
         working_dir: /var/www
         volumes:
-            - .:/var/www:delegated
+            - ./:/var/www
         ports:
-            - 8000:8000
+            - "80:8080"
         depends_on:
             - database
-
-    # Database Server
+            - database-testing
     database:
         container_name: database
         image: mysql:8.0
-        restart: on-failure
         ports:
-            - 3306:3306
+            - "3306:3306"
         environment:
             - MYSQL_DATABASE=${DB_DATABASE}
             - MYSQL_USER=${DB_USERNAME}
             - MYSQL_PASSWORD=${DB_PASSWORD}
             - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
         volumes:
-            - db-vol:/var/lib/mysql
-
-    # Node Server
-    node:
-        container_name: node
-        build:
-            context: .
-            target: node
+            - "db-data:/var/lib/mysql"
+    database-testing:
+        container_name: database-testing
+        image: mysql:8.0
+        ports:
+            - "3008:3306"
+        environment:
+            - MYSQL_DATABASE=${DB_DATABASE_TESTING}
+            - MYSQL_USER=${DB_USERNAME}
+            - MYSQL_PASSWORD=${DB_PASSWORD}
+            - MYSQL_ROOT_PASSWORD=${DB_PASSWORD}
         volumes:
-            - .:/var/www
-            - ./node_modules:/var/www/node_modules
-        tty: true
-
+            - "db-testing-data:/var/lib/mysql"
 volumes:
-    db-vol: ~
+    db-data:
+        name: db-data
+    db-testing-data:
+        name: db-testing-data

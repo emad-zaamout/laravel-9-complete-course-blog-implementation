@@ -13,9 +13,17 @@ fi
 
 php artisan migrate
 php artisan key:generate
-php artisan cache:clear
+php artisan --env=testing key:generate
+
+php artisan clear
+php artisan event:clear
+php artisan optimize:clear
+php artisan queue:clear
+php artisan schedule:clear-cache
 php artisan config:clear
 php artisan route:clear
-php artisan serve --port=$PORT --host=0.0.0.0 --env=.env
+php artisan cache:clear
 
-exec docker-php-entrypoint "$@"
+php-fpm -D
+nginx -g "daemon off;"
+

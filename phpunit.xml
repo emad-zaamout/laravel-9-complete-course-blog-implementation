@@ -16,16 +16,14 @@
         <include>
             <directory suffix=".php">./app</directory>
         </include>
+        <report>
+        <html outputDirectory="./report" lowUpperBound="50" highLowerBound="80"/>
+        </report>
     </coverage>
     <php>
-        <env name="APP_ENV" value="testing"/>
-        <env name="BCRYPT_ROUNDS" value="4"/>
-        <env name="CACHE_DRIVER" value="array"/>
-        <!-- <env name="DB_CONNECTION" value="sqlite"/> -->
-        <!-- <env name="DB_DATABASE" value=":memory:"/> -->
-        <env name="MAIL_MAILER" value="array"/>
-        <env name="QUEUE_CONNECTION" value="sync"/>
-        <env name="SESSION_DRIVER" value="array"/>
-        <env name="TELESCOPE_ENABLED" value="false"/>
+        <server name="APP_ENV" value="testing"/>
+        <server name="HTTP_HOST" value="local.testing"/>
+        <server name="REQUEST_URI" value="local.testing"/>
+        <server name="REMOTE_ADDR" value="local.testing"/>
     </php>
 </phpunit>
